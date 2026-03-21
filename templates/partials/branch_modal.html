@@ -1,0 +1,97 @@
+<div class="modal-backdrop" data-branch-modal>
+  <div class="modal modal-branches" role="dialog" aria-modal="true" aria-label="Выбор филиала">
+    <!-- Header -->
+    <div class="modal-header">
+      <div class="modal-title">
+        <div class="modal-kicker">
+          <span class="pill"><i data-lucide="building-2" class="i"></i> 5 филиалов</span>
+          <span class="dot"></span>
+          <span class="muted">Запись за 1 минуту</span>
+        </div>
+        <h3>Выберите филиал</h3>
+          <div class="modal-tabs" role="tablist" aria-label="Режим">
+  <button class="modal-tab is-active" type="button" data-tab="list">Филиалы</button>
+  <button class="modal-tab" type="button" data-tab="map">Карта</button>
+</div>
+
+      </div>
+
+      <button class="modal-close" data-close-branches aria-label="Закрыть">
+        <i data-lucide="x" class="i"></i>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+        <div class="choice-bar" id="choiceBar" style="display:none;">
+  <div class="choice-pill">
+    <i data-lucide="sparkles" class="i"></i>
+    <span id="choiceText">—</span>
+  </div>
+  <button class="choice-clear" type="button" id="choiceClear" aria-label="Сбросить">
+    <i data-lucide="x" class="i"></i>
+  </button>
+</div>
+
+      <!-- Left -->
+      <div class="branches-left">
+        <div class="branches-toolbar">
+          <div class="search">
+            <i data-lucide="search" class="i"></i>
+            <input type="text" id="branchSearch" placeholder="Поиск по названию / адресу..." autocomplete="off">
+          </div>
+
+          <button class="btn btn-soft" type="button" id="showAllBtn">
+            <i data-lucide="list" class="i"></i>
+            <span>Все</span>
+          </button>
+        </div>
+
+        <div class="branches-list" id="branchesList"></div>
+
+        <div class="branches-hint">
+          <i data-lucide="info" class="i"></i>
+          <span>Нажми на карточку — обновится карта.</span>
+        </div>
+      </div>
+
+      <!-- Right -->
+      <div class="branch-right">
+          <div class="map-branch-switch" id="mapBranchSwitch" aria-label="Филиалы для карты"></div>
+
+        <div class="map-card">
+          <div class="map-top">
+            <div>
+              <div class="map-title" id="branchName">—</div>
+              <div class="map-sub" id="branchAddr">—</div>
+            </div>
+            <div class="map-actions" id="branchQuickActions">
+              <!-- JS -->
+            </div>
+          </div>
+
+          <div class="map-frame">
+            <iframe
+              id="branchMap"
+              src=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer
+    <div class="modal-footer">
+      <div class="muted small">
+        <i data-lucide="shield-check" class="i"></i>
+        Мы не собираем ваши данные — запись сразу в WhatsApp.
+      </div>
+      <button class="btn btn-outline" type="button" data-close-branches>
+        <i data-lucide="arrow-left" class="i"></i>
+        <span>Закрыть</span>
+      </button>
+    </div>-->
+  </div>
+</div>

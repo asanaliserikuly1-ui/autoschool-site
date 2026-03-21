@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}Автошкола Шұғыла{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description" content="Автошкола: обучение вождению, категории, цены, инструкторы. Запись через WhatsApp по филиалам." />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <!-- Icons (Lucide) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GBP93X3B01"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-GBP93X3B01');
+  </script>
+</head>
+
+<body>
+
+  <!-- Top notice / thin bar -->
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <div class="topbar-left">
+        <i data-lucide="map-pin" class="i"></i>
+        <span>5 филиал • Алматы</span>
+      </div>
+      <div class="topbar-right">
+        <a class="topbar-link" href="#branches" data-open-branches>
+          <i data-lucide="phone" class="i"></i>
+          <span>Филиал байланыстары</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header header-animated">
+    <div class="container header-inner">
+
+      <!-- LOGO -->
+      <a href="/kz" class="logo" aria-label="Автошкола Шұғыла">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Автошкола Шұғыла">
+        <div class="logo-text">
+          <div class="logo-title">Автошкола</div>
+          <div class="logo-subtitle">Шұғыла</div>
+        </div>
+      </a>
+
+      <!-- LANG SWITCH -->
+      <div class="lang-switch">
+        <a href="{{ request.path.replace('/kz', '', 1) or '/' }}"
+           class="lang-btn">RU</a>
+
+        <a href="{{ request.path }}"
+           class="lang-btn active">KZ</a>
+      </div>
+
+      <!-- NAV -->
+      <nav class="nav" aria-label="Навигация">
+        <a href="/kz" class="nav-link {% if request.path == '/kz' %}active{% endif %}">Басты бет</a>
+        <a href="/kz/training" class="nav-link {% if request.path.startswith('/kz/training') %}active{% endif %}">Оқу</a>
+        <a href="/kz/instructors" class="nav-link {% if request.path.startswith('/kz/instructors') %}active{% endif %}">Нұсқаушылар</a>
+        <a href="/kz/about" class="nav-link {% if request.path.startswith('/kz/about') %}active{% endif %}">Біз туралы</a>
+      </nav>
+
+      <!-- HEADER ACTIONS -->
+      <div class="header-actions">
+        <button class="btn btn-outline" type="button" data-open-branches>
+          <i data-lucide="building-2" class="i"></i>
+          <span>Филиалдар</span>
+        </button>
+
+        <button class="btn btn-primary" type="button" data-open-branches>
+          <i data-lucide="message-circle" class="i"></i>
+          <span>Жазылу</span>
+        </button>
+
+        <!-- Mobile burger -->
+        <button class="burger" id="burgerBtn" aria-label="Мәзір" aria-expanded="false" aria-controls="mobileNav">
+          <span class="burger-lines" aria-hidden="true"></span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Mobile overlay -->
+  <div class="mobile-overlay" id="mobileOverlay" hidden></div>
+
+  <!-- Mobile drawer -->
+  <nav class="mobile-drawer" id="mobileNav" aria-label="Мобильді мәзір">
+    <div class="mobile-drawer-head">
+      <div class="mobile-brand">
+        <span class="mobile-brand-top">АВТОШКОЛА</span>
+        <span class="mobile-brand-name">Шұғыла</span>
+      </div>
+
+      <button class="mobile-close" id="mobileClose" aria-label="Мәзірді жабу">✕</button>
+    </div>
+
+    <div class="mobile-drawer-body">
+      <a class="mobile-link" href="/kz">Басты бет</a>
+      <a class="mobile-link" href="/kz/training">Оқу</a>
+      <a class="mobile-link" href="/kz/instructors">Нұсқаушылар</a>
+      <a class="mobile-link" href="/kz/about">Біз туралы</a>
+
+      <div class="mobile-divider"></div>
+
+      <button class="mobile-cta" type="button" data-open-branches>
+        Жазылу
+      </button>
+
+      <p class="mobile-note">Филиалды таңдаңыз — WhatsApp ашылады</p>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main page-animated">
+    <div class="container">
+      {% include "partials/flash.html" ignore missing %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer-new">
+    <div class="footer-new-bar"></div>
+
+    <div class="container footer-new-inner">
+      <div class="footer-new-grid">
+
+        <!-- COL 1: Brand -->
+        <div class="footer-col footer-brandcol">
+          <div class="footer-brand-row">
+            <img class="footer-logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Автошкола Шұғыла">
+            <div class="footer-brand-text">
+              <div class="footer-brand-top">АВТОШКОЛА</div>
+              <div class="footer-brand-bottom">ШҰҒЫЛА</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COL 2: Locations -->
+        <div class="footer-col">
+          <div class="footer-title">ФИЛИАЛДАР</div>
+          <div class="footer-list">
+
+            <a class="footer-linkline" target="_blank" rel="noopener"
+               href="https://2gis.kz/almaty/search/%D0%A8%D2%B0%D2%93%D1%8B%D0%BB%D0%B0%20340%2F4%20%D0%BA2%2C%20%D1%86%D0%BE%D0%BA%D0%BE%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%8D%D1%82%D0%B0%D0%B6">
+              ШҰҒЫЛА 340/4 к2, цокольный этаж
+            </a>
+
+            <a class="footer-linkline" target="_blank" rel="noopener"
+               href="https://2gis.kz/almaty/search/%D0%A2%D0%9E%D0%9B%D0%95%20%D0%91%D0%98%20180%D0%B1%2C%209%20%D1%8D%D1%82%D0%B0%D0%B6%2C%201%20%D0%BA%D0%B0%D0%B1%D0%B8%D0%BD%D0%B5%D1%82">
+              ТОЛЕ БИ 180б, 9 этаж, 1 кабинет
+            </a>
+
+            <a class="footer-linkline" target="_blank" rel="noopener"
+               href="https://2gis.kz/almaty/search/8%20%D0%BC%D0%BA%D1%80%2019%D0%B0%2C%202%20%D1%8D%D1%82%D0%B0%D0%B6">
+              8 мкр 19а, 2 этаж
+            </a>
+
+            <a class="footer-linkline" target="_blank" rel="noopener"
+               href="https://2gis.kz/almaty/search/%D0%9C%D0%90%D0%9A%D0%90%D0%A2%D0%90%D0%95%D0%92%D0%90%20117%20%D0%BB%D0%B8%D1%82%20%D0%91%2C%20310%20%D0%BA%D0%B0%D0%B1%D0%B8%D0%BD%D0%B5%D1%82">
+              МАКАТАЕВА 117 лит Б, 310 кабинет
+            </a>
+
+            <a class="footer-linkline" target="_blank" rel="noopener"
+               href="https://2gis.kz/almaty/search/%D0%A1%D0%90%D0%AF%D0%9B%D0%AB%2072%2C%20%D1%86%D0%BE%D0%BA%D0%BE%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9%20%D1%8D%D1%82%D0%B0%D0%B6">
+              САЯЛЫ 72, цокольный этаж
+            </a>
+
+          </div>
+        </div>
+
+        <!-- COL 3: Contacts -->
+        <div class="footer-col">
+          <div class="footer-title">ТЕЛЕФОНДАР</div>
+          <div class="footer-list">
+            <a class="footer-linkline" href="tel:+77755156044">+7 775 515 6044</a>
+            <a class="footer-linkline" href="tel:+77789594131">+7 778 959 4131</a>
+            <a class="footer-linkline" href="tel:+77471437791">+7 747 143 7791</a>
+            <a class="footer-linkline" href="tel:+77471437796">+7 747 143 7796</a>
+            <a class="footer-linkline" href="tel:+77752921400">+7 775 292 1400</a>
+          </div>
+        </div>
+
+        <!-- COL 4: Extra contacts -->
+        <div class="footer-col">
+          <div class="footer-title">БАЙЛАНЫС</div>
+          <div class="footer-list">
+            <a class="footer-linkline" href="#" data-open-branches>WhatsApp арқылы жазылу</a>
+            <a class="footer-linkline" href="/kz/about">Біз туралы</a>
+            <a class="footer-linkline" href="/kz/training">Бағдарламалар</a>
+            <a class="footer-linkline" href="/kz/instructors">Нұсқаушылар</a>
+            <a class="footer-linkline" href="/kz/privacy-policy">Құпиялылық саясаты</a>
+          </div>
+        </div>
+
+        <!-- SOCIAL -->
+        <div class="footer-social">
+          <a class="fs-link" href="https://www.instagram.com/avtoshkola_shugyla/"
+             target="_blank" rel="noopener" aria-label="Instagram">
+            <i data-lucide="instagram" class="i"></i>
+          </a>
+
+          <a class="fs-link"
+             href="https://2gis.kz/almaty/search/Автошкола%20Шұғыла"
+             target="_blank" rel="noopener"
+             aria-label="2GIS">
+            <i data-lucide="map" class="i"></i>
+          </a>
+
+          <button class="fs-link"
+                  type="button"
+                  data-open-branches
+                  aria-label="WhatsApp">
+            <i data-lucide="message-circle" class="i"></i>
+          </button>
+
+          <a class="fs-link"
+             href="https://www.tiktok.com/@_avtoshkola_"
+             target="_blank" rel="noopener"
+             aria-label="TikTok">
+            <i data-lucide="music-2" class="i"></i>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="footer-new-bottom">
+        <div>© {{ 2026 }} Автошкола Шұғыла. Все права защищены.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp / CTA -->
+  <button class="fab" type="button" aria-label="Жазылу" data-open-branches>
+    <i data-lucide="message-circle" class="i"></i>
+  </button>
+
+  <!-- Branch modal (KZ) -->
+  {% include "kz/partials/branch_modal.html" ignore missing %}
+
+  <!-- JS -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>

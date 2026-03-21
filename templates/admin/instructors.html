@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% block title %}Админ — Инструкторы{% endblock %}
+
+{% block content %}
+<section class="section section-min">
+  <div class="section-head-min">
+    <h2>Инструкторы</h2>
+    <p class="muted">Добавляй/меняй инструкторов, категорию, рейтинг и фото.</p>
+  </div>
+
+  <div class="admin-grid">
+    <div class="admin-card">
+      <div class="admin-card-title">Добавить инструктора</div>
+
+      <form method="post" action="/admin/instructors/create" class="form" enctype="multipart/form-data">
+        <label>Имя</label>
+        <input name="name" required placeholder="Например: Ерлан М.">
+
+        <label>Филиал</label>
+        <select name="branch_code" required class="admin-select">
+          {% for b in branches %}
+            <option value="{{ b.code }}">{{ b.name }}</option>
+          {% endfor %}
+        </select>
+
+        <div class="row2">
+          <div>
+            <label>Категория</label>
+            <select name="category" class="admin-select" required>
+              <option value="B" selected>Категория B</option>
+              <option value="A">Категория A</option>
+              <option value="A1">Категория A1</option>
+            </select>
+          </div>
+          <div>
+            <label>Рейтинг (0–5)</label>
+            <input name="rating" type="number" step="0.1" min="0" max="5" value="4.9" placeholder="4.9">
+          </div>
+        </div>
+
+        <label>Кол-во оценок (не обязательно)</label>
+        <input name="rating_count" type="number" min="0" value="0" placeholder="Например: 120">
+
+        <label>Стаж (не обязательно)</label>
+        <input name="experience" placeholder="Например: 7 лет">
+
+        <label>Авто (не обязательно)</label>
+        <input name="car" placeholder="Например: Toyota Camry">
+
+        <label>Теги (через запятую)</label>
+        <input name="tags" placeholder="Парковки, Город, Экзамен">
+
+        <label>Фото (перетащи или выбери файл)</label>
+        <input name="photo" type="file" accept="image/*">
+
+        <label class="check">
+          <input type="checkbox" name="is_active" checked>
+          <span>Активен (показывать на сайте)</span>
+        </label>
+
+        <button class="btn btn-primary" style="width:100%;" type="submit">
+          <i data-lucide="plus" class="i"></i><span>Добавить</span>
+        </button>
+      </form>
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-card-title">Список инструкторов</div>
+
+      {% for i in instructors %}
+      <div class="admin-item">
+        <form method="post" action="/admin/instructors/{{ i.id }}/update" class="form compact" enctype="multipart/form-data">
+
+          <label>Имя</label>
+          <input name="name" value="{{ i.name }}" required>
+
+          <label>Филиал</label>
+          <select name="branch_code" class="admin-select" required>
+            {% for b in branches %}
+              <option value="{{ b.code }}" {% if b.code == i.branch_code %}selected{% endif %}>
+                {{ b.name }}
+              </option>
+            {% endfor %}
+          </select>
+
+          <div class="row2">
+            <div>
+              <label>Категория</label>
+              <select name="category" class="admin-select" required>
+                <option value="B" {% if (i.category or 'B') == 'B' %}selected{% endif %}>Категория B</option>
+                <option value="A" {% if (i.category or 'B') == 'A' %}selected{% endif %}>Категория A</option>
+                <option value="A1" {% if (i.category or 'B') == 'A1' %}selected{% endif %}>Категория A1</option>
+              </select>
+            </div>
+            <div>
+              <label>Рейтинг (0–5)</label>
+              <input name="rating" type="number" step="0.1" min="0" max="5" value="{{ i.rating if i.rating is not none else 4.9 }}">
+            </div>
+          </div>
+
+          <label>Кол-во оценок</label>
+          <input name="rating_count" type="number" min="0" value="{{ i.rating_count if i.rating_count is not none else 0 }}">
+
+          <div class="row2">
+            <div>
+              <label>Стаж</label>
+              <input name="experience" value="{{ i.experience or '' }}">
+            </div>
+            <div>
+              <label>Авто</label>
+              <input name="car" value="{{ i.car or '' }}">
+            </div>
+          </div>
+
+          <label>Теги</label>
+          <input name="tags" value="{{ i.tags or '' }}">
+
+          {% if i.photo_url %}
+            <div class="muted" style="margin-top:6px;">
+              Текущее фото:
+              <a href="{{ url_for('static', filename=i.photo_url) }}" target="_blank">открыть</a>
+            </div>
+          {% endif %}
+
+          <label style="margin-top:10px;">Новое фото (не обязательно)</label>
+          <input name="photo" type="file" accept="image/*">
+
+          <label class="check">
+            <input type="checkbox" name="is_active" {% if i.is_active %}checked{% endif %}>
+            <span>Активен</span>
+          </label>
+
+          <div class="row-actions">
+            <button class="btn btn-primary" type="submit">
+              <i data-lucide="save" class="i"></i><span>Сохранить</span>
+            </button>
+        </form>
+
+            <form method="post" action="/admin/instructors/{{ i.id }}/delete" onsubmit="return confirm('Удалить инструктора?')">
+              <button class="btn btn-outline" type="submit">
+                <i data-lucide="trash" class="i"></i><span>Удалить</span>
+              </button>
+            </form>
+          </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

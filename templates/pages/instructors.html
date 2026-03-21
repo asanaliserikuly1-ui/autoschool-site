@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+{% block title %}Инструкторы — Автошкола Шұғыла{% endblock %}
+
+{% block content %}
+
+<!-- ===== FIGMA HERO (compact) ===== -->
+<section class="inst-hero">
+  <div class="container inst-hero-inner">
+    <div class="inst-hero-left">
+      <h1 class="inst-hero-title">
+        Начни<br>
+        <span class="inst-hero-strong">свой путь к правам</span><br>
+        <span class="inst-hero-strong">вместе с нами</span>
+      </h1>
+
+      <p class="inst-hero-sub">
+        Полный курс подготовки в Алматы — получите свидетельство водителя<br>
+        за 2,5 месяца.
+      </p>
+
+      <button class="inst-hero-btn" type="button" data-open-branches>
+        ЗАПИСАТЬСЯ
+      </button>
+    </div>
+
+    <div class="inst-hero-right" aria-hidden="true">
+      <img class="inst-hero-img"
+           src="{{ url_for('static', filename='images/traffic-light.png') }}"
+           alt="">
+    </div>
+  </div>
+</section>
+
+<!-- ===== STATS STRIP ===== -->
+<section class="inst-stats">
+  <div class="container inst-stats-inner">
+    <div class="inst-stat">
+      <div class="inst-stat-big">10+</div>
+      <div class="inst-stat-small">ОПЫТНЫХ ИНСТРУКТОРОВ</div>
+    </div>
+    <div class="inst-stat-line"></div>
+    <div class="inst-stat">
+      <div class="inst-stat-big">2000+</div>
+      <div class="inst-stat-small">ВЫПУСКНИКОВ</div>
+    </div>
+    <div class="inst-stat-line"></div>
+    <div class="inst-stat">
+      <div class="inst-stat-big">90%</div>
+      <div class="inst-stat-small">СДАЧИ</div>
+    </div>
+  </div>
+</section>
+
+{% set list_all = instructors or [] %}
+{% set A_list = [] %}
+{% set A1_list = [] %}
+{% set B_list = [] %}
+{% set Other_list = [] %}
+
+{% for it in list_all %}
+  {% set cat = (it.category|upper if it.category else '') %}
+  {% if cat == 'A' %}
+    {% set _ = A_list.append(it) %}
+  {% elif cat == 'A1' %}
+    {% set _ = A1_list.append(it) %}
+  {% elif cat == 'B' %}
+    {% set _ = B_list.append(it) %}
+  {% else %}
+    {% set _ = Other_list.append(it) %}
+  {% endif %}
+{% endfor %}
+
+<!-- ===== FILTER (branch chips) ===== -->
+<section class="inst-filter">
+  <div class="container inst-filter-inner">
+    <div class="inst-filter-left">
+      <div class="inst-filter-title">Фильтр</div>
+      <div class="inst-filter-sub">Выбери филиал — чтобы увидеть инструкторов этого филиала.</div>
+    </div>
+
+    <div class="inst-filter-chips">
+      <a class="inst-chip {% if branch == 'all' %}is-active{% endif %}" href="/instructors?branch=all">
+        Все
+      </a>
+
+      {% for b in branches %}
+        <a class="inst-chip {% if branch == b.code %}is-active{% endif %}" href="/instructors?branch={{ b.code }}">
+          {{ b.name.replace('Филиал','').strip() }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% set list_all = instructors or [] %}
+{% set teachers_list = teachers or [] %}
+
+<section class="inst-dual">
+  <div class="container inst-dual-grid">
+
+    <!-- ===== LEFT: INSTRUCTORS ===== -->
+    <div class="inst-dual-col">
+      <div class="inst-cats-head">
+        <div class="inst-cats-head">
+          <div class="inst-cats-title">
+            Инструкторы <span class="inst-count">{{ list_all|length }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="inst-cards">
+        {% if list_all|length == 0 %}
+          <div class="inst-empty">Нет инструкторов</div>
+        {% endif %}
+
+        {% for i in list_all %}
+          {% set tags = (i.tags.split(',') if i.tags else []) %}
+          {% set tag0 = (tags[0].strip() if tags|length > 0 else '') %}
+          {% set exp_text = (i.experience|string if i.experience else '') %}
+          {% set badge_text = ('СТАЖ ' ~ exp_text|upper) if exp_text else (tag0|upper if tag0 else 'ТОП-ИНСТРУКТОР') %}
+
+          <article class="inst-card-figma">
+            <div class="inst-card-photo">
+              {% if i.photo_url %}
+                <img src="{{ url_for('static', filename=i.photo_url) }}" alt="{{ i.name }}">
+              {% else %}
+                <div class="inst-card-avatar">{{ (i.name[:1] if i.name else 'A')|upper }}</div>
+              {% endif %}
+              <div class="inst-badge">{{ badge_text }}</div>
+            </div>
+
+            <div class="inst-card-body">
+              <div class="inst-card-name">{{ i.name }}</div>
+                {% set tags = (i.tags.split(',') if i.tags else []) %}
+                <div class="inst-tags">
+                  {% for tg in tags %}
+                    {% set tg = tg.strip() %}
+                    {% if tg %}
+                      <span class="inst-tag">{{ tg }}</span>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              <div class="inst-card-rating">
+                {% set pill = (i.category|upper if i.category else 'ИНСТ') %}
+                <span class="inst-pill">{{ pill }}</span>
+
+                {% set r = (i.rating if i.rating is not none else 4.9) %}
+                {% set filled = (r + 0.5)|int %}
+                {% if filled < 0 %}{% set filled = 0 %}{% endif %}
+                {% if filled > 5 %}{% set filled = 5 %}{% endif %}
+                {% set empty = 5 - filled %}
+                <span class="inst-stars">{{ '★' * filled }}{{ '☆' * empty }}</span>
+                <span class="inst-rate">{{ '%.1f' % r }}</span>
+                {% if i.rating_count and i.rating_count > 0 %}
+                  <span class="inst-muted">({{ i.rating_count }})</span>
+                {% endif %}
+              </div>
+
+              <div class="inst-card-desc">
+                {% if i.car %}Авто: {{ i.car }}.{% endif %}
+                {% if i.branch_code %}
+                  <span class="inst-muted"> {{ branch_map.get(i.branch_code, i.branch_code) }}.</span>
+                {% endif %}
+              </div>
+
+              <button class="inst-cta-btn"
+                      type="button"
+                      data-open-branches
+                      data-wa-text="Здравствуйте! Хочу записаться к инструктору: {{ i.name }}."
+>
+                Записаться к инструктору
+              </button>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- ===== RIGHT: TEACHERS ===== -->
+    <div class="inst-dual-col">
+      <div class="inst-cats-head">
+        <div class="inst-cats-head">
+          <div class="inst-cats-title">
+            Преподаватели <span class="inst-count">{{ teachers_list|length }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="inst-cards">
+        {% if teachers_list|length == 0 %}
+          <div class="inst-empty">Нет преподавателей</div>
+        {% endif %}
+
+        {% for t in teachers_list %}
+          {% set tags = (t.tags.split(',') if t.tags else []) %}
+          {% set tag0 = (tags[0].strip() if tags|length > 0 else '') %}
+          {% set exp_text = (t.experience|string if t.experience else '') %}
+          {% set badge_text = ('СТАЖ ' ~ exp_text|upper) if exp_text else (tag0|upper if tag0 else 'ПРЕПОДАВАТЕЛЬ') %}
+
+          <article class="inst-card-figma">
+            <div class="inst-card-photo">
+              {% if t.photo_url %}
+                <img src="{{ url_for('static', filename=t.photo_url) }}" alt="{{ t.name }}">
+              {% else %}
+                <div class="inst-card-avatar">{{ (t.name[:1] if t.name else 'T')|upper }}</div>
+              {% endif %}
+              <div class="inst-badge">{{ badge_text }}</div>
+            </div>
+
+            <div class="inst-card-body">
+              <div class="inst-card-name">{{ t.name }}</div>
+                {% set tags = (t.tags.split(',') if t.tags else []) %}
+                <div class="inst-tags">
+                  {% for tg in tags %}
+                    {% set tg = tg.strip() %}
+                    {% if tg %}
+                      <span class="inst-tag">{{ tg }}</span>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+
+              <div class="inst-card-rating">
+                <span class="inst-pill">ПДД</span>
+                {% set r = (t.rating if t.rating is not none else 4.9) %}
+                {% set filled = (r + 0.5)|int %}
+                {% if filled < 0 %}{% set filled = 0 %}{% endif %}
+                {% if filled > 5 %}{% set filled = 5 %}{% endif %}
+                {% set empty = 5 - filled %}
+                <span class="inst-stars">{{ '★' * filled }}{{ '☆' * empty }}</span>
+                <span class="inst-rate">{{ '%.1f' % r }}</span>
+                {% if t.rating_count and t.rating_count > 0 %}
+                  <span class="inst-muted">({{ t.rating_count }})</span>
+                {% endif %}
+              </div>
+
+              <div class="inst-card-desc">
+                {% if t.subject %}{{ t.subject }}.{% endif %}
+                {% if t.branch_code %}
+                  <span class="inst-muted"> {{ branch_map.get(t.branch_code, t.branch_code) }}.</span>
+                {% endif %}
+              </div>
+
+              <button class="inst-cta-btn"
+                      type="button"
+                      data-open-branches
+                      data-wa-text="Здравствуйте! Хочу записаться к преподавателю: {{ t.name }}.{{ branch_map.get(t.branch_code, t.branch_code) }}.">
+                Записаться к преподавателю
+              </button>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!--<script>
+  if (window.lucide) lucide.createIcons();
+</script>-->
+
+{% endblock %}

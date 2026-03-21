@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}Админ — Цены главного экрана{% endblock %}
+
+{% block content %}
+<section class="section section-min">
+  <div class="section-head-min">
+    <h2>Цены главного экрана</h2>
+    <p class="muted">Редактируй карточки B_MT / B_AT / A / A1 (строки + цена).</p>
+  </div>
+
+  <div class="admin-grid">
+    <!-- LEFT: CREATE -->
+    <div class="admin-card">
+      <div class="admin-card-title">Добавить карточку</div>
+
+      <form method="post" action="/admin/home-prices/create" class="form">
+        <label>CODE (уникальный)</label>
+        <input name="code" required placeholder="B_MT / B_AT / A / A1">
+
+        <label>Категория (для группировки, не обяз.)</label>
+        <select name="category" class="admin-select">
+          <option value="B" selected>B</option>
+          <option value="A">A</option>
+          <option value="A1">A1</option>
+        </select>
+
+        <label>Заголовок колонки</label>
+        <input name="col_title" value="МКПП" placeholder="МКПП / АКПП">
+
+        <label>Строка 1</label>
+        <input name="line1" value="2 месяца" placeholder="2 месяца">
+
+        <label>Строка 2</label>
+        <input name="line2" value="16 уроков теории" placeholder="16 уроков теории">
+
+        <label>Строка 3 (опционально)</label>
+        <input name="line3" value="5 уроков практики" placeholder="5 уроков практики">
+
+        <label>Цена</label>
+        <input name="price_text" value="100 000 тенге" placeholder="100 000 тенге">
+
+        <label class="check">
+          <input type="checkbox" name="is_active" checked>
+          <span>Активно</span>
+        </label>
+
+        <button class="btn btn-primary" style="width:100%;" type="submit">
+          <span>Добавить</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- RIGHT: LIST -->
+    <div class="admin-card">
+      <div class="admin-card-title">Список</div>
+
+      {% if not items %}
+        <p class="muted">Пока пусто. Добавь 4 карточки: <b>B_MT</b>, <b>B_AT</b>, <b>A</b>, <b>A1</b>.</p>
+      {% endif %}
+
+      {% for i in items %}
+      <div class="admin-item">
+
+        <!-- UPDATE -->
+        <form method="post" action="/admin/home-prices/{{ i.id }}/update" class="form compact">
+
+          <div class="muted" style="margin-bottom:6px;">
+            <b>CODE:</b> {{ i.code }}
+          </div>
+
+          <label>Категория</label>
+          <select name="category" class="admin-select">
+            <option value="B" {% if i.category=='B' %}selected{% endif %}>B</option>
+            <option value="A" {% if i.category=='A' %}selected{% endif %}>A</option>
+            <option value="A1" {% if i.category=='A1' %}selected{% endif %}>A1</option>
+          </select>
+
+          <label>Заголовок</label>
+          <input name="col_title" value="{{ i.col_title }}">
+
+          <label>Строка 1</label>
+          <input name="line1" value="{{ i.line1 }}">
+
+          <label>Строка 2</label>
+          <input name="line2" value="{{ i.line2 }}">
+
+          <label>Строка 3</label>
+          <input name="line3" value="{{ i.line3 or '' }}">
+
+          <label>Цена</label>
+          <input name="price_text" value="{{ i.price_text }}">
+
+          <label class="check">
+            <input type="checkbox" name="is_active" {% if i.is_active %}checked{% endif %}>
+            <span>Активно</span>
+          </label>
+
+          <div class="row-actions">
+            <button class="btn btn-primary" type="submit"><span>Сохранить</span></button>
+          </div>
+        </form>
+
+        <!-- DELETE (отдельно) -->
+        <form method="post" action="/admin/home-prices/{{ i.id }}/delete"
+              onsubmit="return confirm('Удалить строку?')" style="margin-top:10px;">
+          <button class="btn btn-outline" type="submit"><span>Удалить</span></button>
+        </form>
+
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,344 @@
+{% extends "base.html" %}
+{% block title %}О нас — Автошкола Шұғыла{% endblock %}
+
+{% block content %}
+
+<section class="about-fg">
+  <div class="container about-fg-inner">
+
+    <!-- TITLE -->
+    <div class="about-fg-head">
+      <h1 class="about-fg-title">О НАС</h1>
+      <p class="about-fg-sub">
+        Наша автошкола начала работу в <b>сентябре 2024 года</b> в районе <b>Шугыла</b>.
+        С самого начала мы поставили перед собой задачу — обучать <b>не формально</b>, а
+        <b>качественно и ответственно</b>.
+        <br><br>
+        Благодаря доверию курсантов за короткое время мы выросли до <b>5 филиалов</b> по городу.
+        Мы придерживаемся принципа <b>реальной подготовки</b>: перед получением свидетельство
+        каждый курсант проходит <b>итоговую проверку знаний и навыков</b>.
+        <br><br>
+        При необходимости теоретические занятия можно пройти <b>повторно бесплатно</b> — для нас важно,
+        чтобы материал был понятен и усвоен. Наша цель — выпускать не просто обладателей прав,
+        а <b>уверенных и безопасных водителей</b>.
+      </p>
+    </div>
+
+    <!-- BLOCK 1 -->
+    <div class="about-fg-row">
+      <div class="about-fg-media">
+        <img src="{{ url_for('static', filename='images/about/about-sign.png') }}"
+             alt="Автошкола Шұғыла" class="about-fg-img">
+      </div>
+
+      <div class="about-fg-card">
+        <ul class="about-fg-list">
+          <li><span class="about-fg-ico"><i data-lucide="calendar-check" class="i"></i></span>
+            Практика по записи — под ваш график (утро/день/вечер)
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="badge-check" class="i"></i></span>
+            Объясняем простым языком: без “заучил и забыл”
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="car" class="i"></i></span>
+            Современные машины и безопасная отработка навыков
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="book-open" class="i"></i></span>
+            Очные теоретические занятия с подробным разбором тем
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="map-pin" class="i"></i></span>
+            5 филиалов по Алматы — выбирайте ближайший
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BLOCK 2 -->
+    <div class="about-fg-row about-fg-row--reverse">
+      <div class="about-fg-card">
+        <ul class="about-fg-list">
+          <li><span class="about-fg-ico"><i data-lucide="clock-3" class="i"></i></span>
+            Гибкий формат занятий: шаг за шагом, в своём темпе
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="users" class="i"></i></span>
+            Инструкторы, которые умеют поддержать и объяснить спокойно
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="clipboard-check" class="i"></i></span>
+            ПДД-тесты в формате АвтоЦОНа — готовим к реальному экзамену
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="handshake" class="i"></i></span>
+            Сопровождение: подскажем по документам и этапам до получения прав
+          </li>
+        </ul>
+      </div>
+
+      <div class="about-fg-media">
+        <img src="{{ url_for('static', filename='images/about/about-light.jpg') }}"
+             alt="Процесс обучения" class="about-fg-img about-fg-img--right">
+      </div>
+    </div>
+
+    <!-- BLOCK 3 -->
+    <div class="about-fg-row">
+      <div class="about-fg-media">
+        <img src="{{ url_for('static', filename='images/about/about-car.png') }}"
+             alt="Практика и экзамены" class="about-fg-img">
+      </div>
+
+      <div class="about-fg-card">
+        <ul class="about-fg-list">
+          <li><span class="about-fg-ico"><i data-lucide="wallet" class="i"></i></span>
+            Оплата наличными и в рассрочку (условия уточняйте у филиала)
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="gift" class="i"></i></span>
+            Бонусы и акции — по расписанию наборов (следите в Instagram)
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="languages" class="i"></i></span>
+            Обучение на русском и казахском языках
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="graduation-cap" class="i"></i></span>
+            Структурная теория: правила + ситуации + разбор ошибок
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="file-text" class="i"></i></span>
+            Доступ к тестам и материалам на период обучения
+          </li>
+        </ul>
+
+        <div class="about-fg-actions">
+          <button class="btn btn-primary" type="button" data-open-branches>
+            <i data-lucide="message-circle" class="i"></i>
+            <span>Выбрать филиал</span>
+          </button>
+
+          <a class="btn btn-outline" href="/training">
+            <i data-lucide="graduation-cap" class="i"></i>
+            <span>Обучение</span>
+          </a>
+
+          <a class="btn btn-outline" href="https://www.instagram.com/avtoshkola_shugyla/" target="_blank" rel="noopener">
+            <i data-lucide="instagram" class="i"></i>
+            <span>Instagram</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOUNDER -->
+    <div class="about-fg-row about-founder">
+      <div class="about-fg-card founder-text">
+        <div class="about-founder-title">ОСНОВАТЕЛЬ АВТОШКОЛЫ</div>
+        <div class="about-founder-name">Кайрат Сейтмуратович</div>
+
+        <div class="about-founder-text">
+          Основатель автошколы «Шұғыла». С самого начала заложил принцип — обучать
+          <b>качественно и ответственно</b>, с упором на <b>реальную подготовку</b>.
+          Благодаря этому подходу автошкола быстро выросла до <b>5 филиалов</b> в Алматы,
+          а выпускники получают не просто права, а уверенность и навыки <b>безопасного вождения</b>.
+        </div>
+
+        <a class="btn btn-outline" href="https://www.instagram.com/kairat_seitmuratovich/" target="_blank" rel="noopener">
+          <i data-lucide="instagram" class="i"></i>
+          <span>Instagram основателя</span>
+        </a>
+      </div>
+
+      <div class="about-fg-media founder-media">
+        <img class="founder-img"
+             src="{{ url_for('static', filename='images/about/kairat.jpg') }}"
+             alt="Основатель автошколы Шұғыла">
+      </div>
+    </div>
+
+    <!-- ===== GALLERY (slider) — ВНУТРИ container ===== -->
+    <div class="about-fg-row about-gallery">
+      <div class="about-fg-card about-gallery-card">
+        <div class="about-founder-title">ГАЛЕРЕЯ</div>
+
+
+        {% if gallery and gallery|length %}
+          <div class="g-wrap" id="gWrap">
+            <button class="g-nav g-prev" type="button" aria-label="Предыдущее">‹</button>
+
+            <div class="g-viewport">
+              <div class="g-track" id="gTrack">
+                {% for img in gallery %}
+                  <button class="g-card" type="button"
+                          data-full="{{ url_for('static', filename=img.photo_url) }}"
+                          data-title="{{ (img.title or '')|e }}">
+                    <img src="{{ url_for('static', filename=img.photo_url) }}"
+                         alt="{{ img.title or 'Галерея' }}">
+                    {% if img.title %}
+                      <span class="g-cap">{{ img.title }}</span>
+                    {% endif %}
+                  </button>
+                {% endfor %}
+              </div>
+            </div>
+
+            <button class="g-nav g-next" type="button" aria-label="Следующее">›</button>
+          </div>
+
+          <!-- lightbox -->
+          <div class="ag-modal" id="agModal" aria-hidden="true">
+            <div class="ag-backdrop" data-close></div>
+
+            <div class="ag-box" role="dialog" aria-modal="true">
+              <button class="ag-close" type="button" data-close aria-label="Закрыть">×</button>
+
+              <button class="ag-arrow ag-left" type="button" aria-label="Назад">‹</button>
+              <button class="ag-arrow ag-right" type="button" aria-label="Вперёд">›</button>
+
+              <img id="agFull" src="" alt="">
+              <div class="ag-cap" id="agCap"></div>
+            </div>
+          </div>
+        {% else %}
+          <p class="muted" style="margin-top:10px;">Пока нет фото. Добавьте их в админ-панели.</p>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function(){
+  const wrap = document.getElementById("gWrap");
+  if (!wrap) return;
+
+  const track = document.getElementById("gTrack");
+  const viewport = wrap.querySelector(".g-viewport");
+  const btnPrev = wrap.querySelector(".g-prev");
+  const btnNext = wrap.querySelector(".g-next");
+  const cards = [...wrap.querySelectorAll(".g-card")];
+
+  // гарантированно выключаем любые анимации
+  track.style.animation = "none";
+
+  function clamp(val, min, max){ return Math.max(min, Math.min(max, val)); }
+
+  function maxScroll(){
+    const total = track.scrollWidth;
+    const view = viewport.clientWidth;
+    return Math.max(0, total - view);
+  }
+
+  function pageStep(){
+    return Math.max(240, Math.floor(viewport.clientWidth * 0.92));
+  }
+
+  let x = 0;
+
+  function render(){
+    const m = maxScroll();
+    x = clamp(x, 0, m);
+    track.style.transform = `translateX(${-x}px)`;
+    btnPrev.disabled = (x <= 0);
+    btnNext.disabled = (x >= m - 1);
+  }
+
+  btnPrev.addEventListener("click", ()=>{ x -= pageStep(); render(); });
+  btnNext.addEventListener("click", ()=>{ x += pageStep(); render(); });
+
+  // колесо мыши (вертикальное) = горизонтальная прокрутка
+  viewport.addEventListener("wheel", (e)=>{
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)){
+      e.preventDefault();
+      x += e.deltaY;
+      render();
+    }
+  }, {passive:false});
+
+  // свайп по галерее
+  let startX = null;
+  viewport.addEventListener("touchstart", (e)=>{ startX = e.touches[0].clientX; }, {passive:true});
+  viewport.addEventListener("touchend", (e)=>{
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    startX = null;
+    if (Math.abs(dx) > 35){
+      x += (dx > 0 ? -pageStep() : pageStep());
+      render();
+    }
+  }, {passive:true});
+
+  // ✅ важное: после загрузки картинок пересчитать ширину
+  const imgs = [...track.querySelectorAll("img")];
+  let leftToLoad = imgs.length;
+
+  function onImgDone(){
+    leftToLoad--;
+    if (leftToLoad <= 0){
+      // картинки точно загрузились -> ширина трека финальная
+      render();
+    }
+  }
+
+  if (imgs.length){
+    imgs.forEach(img=>{
+      if (img.complete) onImgDone();
+      else {
+        img.addEventListener("load", onImgDone, {once:true});
+        img.addEventListener("error", onImgDone, {once:true});
+      }
+    });
+  } else {
+    render();
+  }
+
+  window.addEventListener("resize", render);
+
+  // ===== Lightbox =====
+  const modal = document.getElementById("agModal");
+  const full = document.getElementById("agFull");
+  const cap = document.getElementById("agCap");
+  if (!modal || !full) return;
+      // ✅ FIX: переносим модалку в body, чтобы fixed был относительно экрана
+    if (modal.parentElement !== document.body) {
+      document.body.appendChild(modal);
+    }
+
+  let idx = 0;
+
+  function openAt(i){
+  idx = (i + cards.length) % cards.length;
+
+  const fullSrc = cards[idx].getAttribute("data-full") || "";
+  const title = cards[idx].getAttribute("data-title") || "";
+  const imgEl = cards[idx].querySelector("img");
+
+  full.src = fullSrc;
+  full.alt = title || (imgEl ? imgEl.alt : "Фото");
+  if (cap) cap.textContent = title;
+
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+  function close(){
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    full.src = "";
+    if (cap) cap.textContent = "";
+    document.body.style.overflow = "";
+  }
+
+  cards.forEach((btn, i)=> btn.addEventListener("click", ()=> openAt(i)));
+  modal.querySelectorAll("[data-close]").forEach(el=> el.addEventListener("click", close));
+
+  const left = modal.querySelector(".ag-left");
+  const right = modal.querySelector(".ag-right");
+  if (left) left.addEventListener("click", ()=> openAt(idx - 1));
+  if (right) right.addEventListener("click", ()=> openAt(idx + 1));
+
+  document.addEventListener("keydown", (e)=>{
+    if (!modal.classList.contains("is-open")) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") openAt(idx - 1);
+    if (e.key === "ArrowRight") openAt(idx + 1);
+  });
+
+  if (window.lucide) lucide.createIcons();
+})();
+</script>
+
+{% endblock %}

@@ -1,0 +1,212 @@
+{% extends "kz/base.html" %}
+{% block title %}Оқу — Автошкола Шұғыла{% endblock %}
+
+{% block content %}
+
+<!-- ===== FIGMA HERO ===== -->
+<section class="tr-hero">
+  <div class="container tr-hero-inner">
+    <div class="tr-hero-left">
+      <h1 class="tr-hero-title">
+        <span class="tr-hero-top-word">Баста</span><br>
+        <span class="tr-hero-title-strong">куәлікке апарар жолды</span><br>
+        <span class="tr-hero-title-strong">бізбен баста</span>
+      </h1>
+
+      <p class="tr-hero-sub">
+        Алматыда толық дайындық курсы — жүргізуші сертификатын 2,5 айда алыңыз.
+      </p>
+
+      <button class="tr-btn tr-btn-primary" type="button" data-open-branches>
+        <span>ЖАЗЫЛУ</span>
+      </button>
+    </div>
+
+    <div class="tr-hero-right" aria-hidden="true">
+      <img class="tr-hero-img"
+           src="{{ url_for('static', filename='images/training/sign.png') }}"
+           alt="">
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== PROGRAM (3 steps) ===== -->
+<section class="tr-program">
+  <div class="container tr-program-inner">
+
+    <h2 class="tr-title">ОҚУ БАҒДАРЛАМАСЫ</h2>
+    <p class="tr-sub">
+      Оқу бағдарламасына толық теориялық курс, практикалық сабақтар және емтиханға дайындық кіреді.
+    </p>
+
+    <div class="tr-flow">
+      <div class="tr-flow-item">
+        <div class="tr-flow-ico">
+          <i data-lucide="book-open" class="i"></i>
+        </div>
+        <div class="tr-flow-label">ТЕОРИЯ</div>
+      </div>
+
+      <div class="tr-flow-arrow">→</div>
+
+      <div class="tr-flow-item">
+        <div class="tr-flow-ico">
+          <i data-lucide="car" class="i"></i>
+        </div>
+        <div class="tr-flow-label">ПРАКТИКА</div>
+      </div>
+
+      <div class="tr-flow-arrow">→</div>
+
+      <div class="tr-flow-item">
+        <div class="tr-flow-ico">
+          <i data-lucide="clipboard-check" class="i"></i>
+        </div>
+        <div class="tr-flow-label">ЕМТИХАН</div>
+      </div>
+    </div>
+
+    <div class="tr-bigline">БАРЛЫҒЫ 2,5 АЙДА</div>
+  </div>
+</section>
+
+
+<!-- ===== THEORY ===== -->
+<section class="tr-block">
+  <div class="container tr-block-inner">
+    <h2 class="tr-block-title">ТЕОРИЯ</h2>
+    <p class="tr-block-text">
+      Әр лекциядан кейін емтихан бағдарламасы бойынша тест тапсырып отырасыз.
+    </p>
+
+    <div class="tr-icon-line">
+      <div class="tr-icon-pack"><i data-lucide="file-text" class="i"></i><i data-lucide="plus" class="i"></i><i data-lucide="file-check" class="i"></i></div>
+      <div class="tr-icon-arrow">→</div>
+      <div class="tr-icon-pack"><i data-lucide="file-text" class="i"></i><i data-lucide="plus" class="i"></i><i data-lucide="file-check" class="i"></i></div>
+      <div class="tr-icon-arrow">→</div>
+      <div class="tr-icon-badge"><i data-lucide="trending-up" class="i"></i></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== PRACTICE ===== -->
+<section class="tr-block">
+  <div class="container tr-block-inner">
+    <h2 class="tr-block-title">ПРАКТИКА</h2>
+    <p class="tr-block-text">
+      Алдымен — жабық алаңда элементтерді автоматизмге дейін үйрену. Тек содан кейін қала маршруттарында практикаға көшеміз.
+    </p>
+
+    <div class="tr-card">
+      <div class="tr-card-left">
+        <ul class="tr-card-list">
+          <li><i data-lucide="check" class="i"></i> Сабақ кестесі ыңғайлы</li>
+          <li><i data-lucide="check" class="i"></i> 5 жүргізу сабағы</li>
+          <li><i data-lucide="check" class="i"></i> Куәлік алғанға дейін толық сүйемелдеу</li>
+          <li><i data-lucide="check" class="i"></i> Ең мықты оқытушылар мен нұсқаушылар</li>
+        </ul>
+
+        <button class="tr-btn tr-btn-primary" type="button" data-open-branches>
+          <span>ЖАЗЫЛУ</span>
+        </button>
+      </div>
+
+      <div class="tr-card-right" aria-hidden="true">
+        <img class="tr-card-img"
+             src="{{ url_for('static', filename='images/training/car.png') }}"
+             alt="">
+      </div>
+    </div>
+
+    <div class="tr-down">↓</div>
+  </div>
+</section>
+
+
+<!-- ===== EXAM ===== -->
+<section class="tr-block tr-block-last">
+  <div class="container tr-block-inner">
+    <h2 class="tr-block-title">ЕМТИХАН</h2>
+    <p class="tr-block-text">
+      Оқу сапасын бақылау: білімді бекіту және қателерді болдырмау үшін нақты емтиханды имитациялау.
+    </p>
+
+    <div class="tr-card tr-card-exam">
+      <!-- RIGHT: вместо фото — текст -->
+      <div class="tr-card-right">
+        <div class="tr-exam-note">
+          Бұл — міндетті кезең және сіздің негізгі моральдық дайындығыңыз. Ішкі емтихан СпецЦОН регламентіне
+          толық сәйкес өтеді. Бұл сізге тест форматына үйренуге, қобалжуды жеңуге және 100% дайын екеніңізге
+          көз жеткізуге көмектеседі. Мұны бізде өтіңіз — ресми емтиханда өзіңізді тыныш әрі сенімді сезінесіз.
+        </div>
+      </div>
+
+      <!-- LEFT: как было -->
+      <div class="tr-card-left">
+        <div class="tr-exam-text">
+          <p><b>Алдымен</b> автошколада ішкі емтихан тапсырасыз — ол нақты емтиханнан жеңілірек.</p>
+          <p class="muted">Содан кейін ресми тапсыруда тапсырмаларды білесіз де, өзіңізді сенімді сезінесіз.</p>
+        </div>
+
+        <button class="tr-btn tr-btn-primary" type="button" data-open-branches>
+          <span>ЖАЗЫЛУ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ===== твой блок цен (логика сохраняется) ===== -->
+<section class="section section-min">
+  <div class="section-head-min">
+    <h2>Санаттар мен бағалар</h2>
+  </div>
+
+  <div class="grid-3">
+    {% for p in prices %}
+      <div class="price-card {% if p.is_highlight %}highlight{% endif %}">
+        <div class="price-top">
+          <div class="price-name">{{ p.title }}</div>
+          {% if p.subtitle %}
+            <div class="price-tag">{{ p.subtitle }}</div>
+          {% endif %}
+        </div>
+
+        <div class="price-value">{{ p.price_text }}</div>
+
+        <div class="price-mini muted">
+          {% if p.subtitle %}{{ p.subtitle }}{% else %}Толығырақ WhatsApp-та нақтылаңыз{% endif %}
+        </div>
+
+        <button class="btn {% if p.is_highlight %}btn-primary{% else %}btn-outline{% endif %}"
+                type="button"
+                data-open-branches
+                data-wa-text="Сәлеметсіз бе! Жазылғым келеді. Қызықтыратыны: {{ p.title }}.">
+          <i data-lucide="message-circle" class="i"></i>
+          <span>Нақтылау</span>
+        </button>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+
+<!-- ===== финальный CTA ===== -->
+<section class="cta cta-min">
+  <div class="cta-inner">
+    <div>
+      <h2>Бастауға дайынсыз ба?</h2>
+      <p>Филиалды таңдаңыз — және WhatsApp арқылы жазылыңыз.</p>
+    </div>
+    <button class="btn btn-primary" type="button" data-open-branches>
+      <i data-lucide="message-circle" class="i"></i>
+      <span>Филиалды таңдау</span>
+    </button>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Админ — Филиалы{% endblock %}
+
+{% block content %}
+<section class="section section-min">
+  <div class="section-head-min">
+    <h2>Филиалы</h2>
+    <p class="muted">Добавляй/меняй адрес, телефоны и embed-карту.</p>
+  </div>
+
+  <div class="admin-grid">
+    <div class="admin-card">
+      <div class="admin-card-title">Добавить филиал</div>
+      <form method="post" action="/admin/branches/create" class="form">
+        <label>Код (shugyla/tolebi...)</label>
+        <input name="code" required>
+
+        <label>Название</label>
+        <input name="name" required>
+
+        <label>Адрес</label>
+        <input name="address" required>
+
+        <label>Телефон</label>
+        <input name="phone" required>
+
+        <label>WhatsApp</label>
+        <input name="whatsapp" required>
+
+        <label>Ссылка embed карты</label>
+        <textarea name="map_embed" rows="3" required></textarea>
+
+        <button class="btn btn-primary" style="width:100%;" type="submit">
+          <i data-lucide="plus" class="i"></i><span>Добавить</span>
+        </button>
+      </form>
+    </div>
+
+    <div class="admin-card">
+      <div class="admin-card-title">Список филиалов</div>
+
+      {% for b in branches %}
+      <div class="admin-item">
+        <form method="post" action="/admin/branches/{{ b.id }}/update" class="form compact">
+          <div class="row2">
+            <div>
+              <label>Код</label>
+              <input name="code" value="{{ b.code }}" required>
+            </div>
+            <div>
+              <label>Название</label>
+              <input name="name" value="{{ b.name }}" required>
+            </div>
+          </div>
+
+          <label>Адрес</label>
+          <input name="address" value="{{ b.address }}" required>
+
+          <div class="row2">
+            <div>
+              <label>Телефон</label>
+              <input name="phone" value="{{ b.phone }}" required>
+            </div>
+            <div>
+              <label>WhatsApp</label>
+              <input name="whatsapp" value="{{ b.whatsapp }}" required>
+            </div>
+          </div>
+
+          <label>Embed карты</label>
+          <textarea name="map_embed" rows="2" required>{{ b.map_embed }}</textarea>
+
+          <div class="row-actions">
+            <button class="btn btn-primary" type="submit">
+              <i data-lucide="save" class="i"></i><span>Сохранить</span>
+            </button>
+        </form>
+
+            <form method="post" action="/admin/branches/{{ b.id }}/delete" onsubmit="return confirm('Удалить филиал?')">
+              <button class="btn btn-outline" type="submit">
+                <i data-lucide="trash" class="i"></i><span>Удалить</span>
+              </button>
+            </form>
+          </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+<script> if (window.lucide) lucide.createIcons(); </script>
+{% endblock %}
