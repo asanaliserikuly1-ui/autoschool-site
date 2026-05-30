@@ -10,6 +10,12 @@ from sqlalchemy import text
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
 
+try:
+    import cloudinary
+    import cloudinary.uploader
+except ImportError:
+    cloudinary = None
+
 db = SQLAlchemy()
 
 
@@ -127,16 +133,39 @@ def create_app():
     app.config.from_object(Config)
 
     # DB
-    os.makedirs(app.instance_path, exist_ok=True)
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(app.instance_path, "app.db")
+    # На Render нельзя хранить рабочую SQLite-базу в файлах проекта: после redeploy/restart
+    # файл может исчезнуть. Поэтому в проде берём PostgreSQL/Supabase из DATABASE_URL.
+    database_url = os.getenv("DATABASE_URL") or os.getenv("SUPABASE_DATABASE_URL")
+    if database_url:
+        # Supabase/Render иногда дают URL в старом формате postgres://,
+        # SQLAlchemy 2.x ожидает postgresql://.
+        if database_url.startswith("postgres://"):
+            database_url = database_url.replace("postgres://", "postgresql://", 1)
+        app.config["SQLALCHEMY_DATABASE_URI"] = database_url
+    else:
+        # Локально можно оставить SQLite, чтобы сайт запускался без Supabase.
+        os.makedirs(app.instance_path, exist_ok=True)
+        db_path = os.path.join(app.instance_path, "app.db")
+        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + db_path
+
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "pool_pre_ping": True,
+        "pool_recycle": 280,
+    }
 
     # Uploads
+    # В проде фото грузим в Cloudinary. Локально, если Cloudinary env нет, сохраняем в static/uploads.
     app.config["UPLOAD_FOLDER_INSTRUCTORS"] = os.path.join(app.static_folder, "uploads", "instructors")
     app.config["UPLOAD_FOLDER_TEACHERS"] = os.path.join(app.static_folder, "uploads", "teachers")
     app.config["UPLOAD_FOLDER_GALLERY"] = os.path.join(app.static_folder, "uploads", "gallery")
     app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024  # 5MB
     ALLOWED_EXT = {"png", "jpg", "jpeg", "webp"}
+
+    cloudinary_url = os.getenv("CLOUDINARY_URL")
+    use_cloudinary = bool(cloudinary_url and cloudinary is not None)
+    if use_cloudinary:
+        cloudinary.config(secure=True)
 
     db.init_app(app)
 
@@ -154,72 +183,81 @@ def create_app():
     def allowed_file(filename: str) -> bool:
         return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXT
 
+    def media_url(photo_path: str) -> str:
+        """Возвращает корректный URL для фото: Cloudinary URL или локальный static path."""
+        if not photo_path:
+            return ""
+        if photo_path.startswith(("http://", "https://")):
+            return photo_path
+        return url_for("static", filename=photo_path)
+
+    app.jinja_env.globals["media_url"] = media_url
+
+    def save_photo(file_storage, local_subfolder: str, cloudinary_folder: str) -> str:
+        if not file_storage or not getattr(file_storage, "filename", ""):
+            return ""
+        if file_storage.filename.strip() == "":
+            return ""
+        if not allowed_file(file_storage.filename):
+            return ""
+
+        original = secure_filename(file_storage.filename)
+        ext = original.rsplit(".", 1)[1].lower()
+        fname = f"{uuid4().hex}.{ext}"
+
+        if use_cloudinary:
+            result = cloudinary.uploader.upload(
+                file_storage,
+                folder=cloudinary_folder,
+                public_id=fname.rsplit(".", 1)[0],
+                overwrite=False,
+                resource_type="image",
+            )
+            return result.get("secure_url") or result.get("url") or ""
+
+        folder = os.path.join(app.static_folder, "uploads", local_subfolder)
+        os.makedirs(folder, exist_ok=True)
+        abs_path = os.path.join(folder, fname)
+        file_storage.save(abs_path)
+        return f"uploads/{local_subfolder}/{fname}"
+
 
     # ---------- Photos ----------
     def save_instructor_photo(file_storage) -> str:
-        if not file_storage or not getattr(file_storage, "filename", ""):
-            return ""
-        if file_storage.filename.strip() == "":
-            return ""
-        if not allowed_file(file_storage.filename):
-            return ""
-
-        os.makedirs(app.config["UPLOAD_FOLDER_INSTRUCTORS"], exist_ok=True)
-        original = secure_filename(file_storage.filename)
-        ext = original.rsplit(".", 1)[1].lower()
-        fname = f"{uuid4().hex}.{ext}"
-        abs_path = os.path.join(app.config["UPLOAD_FOLDER_INSTRUCTORS"], fname)
-        file_storage.save(abs_path)
-        return f"uploads/instructors/{fname}"
+        return save_photo(file_storage, "instructors", "autoschool/instructors")
 
     def save_gallery_photo(file_storage) -> str:
-        if not file_storage or not getattr(file_storage, "filename", ""):
-            return ""
-        if file_storage.filename.strip() == "":
-            return ""
-        if not allowed_file(file_storage.filename):
-            return ""
-
-        os.makedirs(app.config["UPLOAD_FOLDER_GALLERY"], exist_ok=True)
-        original = secure_filename(file_storage.filename)
-        ext = original.rsplit(".", 1)[1].lower()
-        fname = f"{uuid4().hex}.{ext}"
-        abs_path = os.path.join(app.config["UPLOAD_FOLDER_GALLERY"], fname)
-        file_storage.save(abs_path)
-        return f"uploads/gallery/{fname}"
+        return save_photo(file_storage, "gallery", "autoschool/gallery")
 
     def save_teacher_photo(file_storage) -> str:
-        if not file_storage or not getattr(file_storage, "filename", ""):
-            return ""
-        if file_storage.filename.strip() == "":
-            return ""
-        if not allowed_file(file_storage.filename):
-            return ""
-
-        os.makedirs(app.config["UPLOAD_FOLDER_TEACHERS"], exist_ok=True)
-        original = secure_filename(file_storage.filename)
-        ext = original.rsplit(".", 1)[1].lower()
-        fname = f"{uuid4().hex}.{ext}"
-        abs_path = os.path.join(app.config["UPLOAD_FOLDER_TEACHERS"], fname)
-        file_storage.save(abs_path)
-        return f"uploads/teachers/{fname}"
+        return save_photo(file_storage, "teachers", "autoschool/teachers")
 
     def try_remove_file(photo_path: str):
         if not photo_path:
+            return
+        # Локальные файлы удаляем. Cloudinary URL не трогаем, чтобы случайно не удалить не тот ресурс.
+        if photo_path.startswith(("http://", "https://")):
             return
         try:
             abs_path = os.path.join(app.static_folder, photo_path)
             if os.path.exists(abs_path):
                 os.remove(abs_path)
-        except:
+        except Exception:
             pass
 
-    # ---------- DB ensures (для старой sqlite) ----------
+    # ---------- DB ensures (только для старой локальной SQLite) ----------
+    def _is_sqlite() -> bool:
+        return str(app.config.get("SQLALCHEMY_DATABASE_URI", "")).startswith("sqlite")
+
     def _has_column(table, col) -> bool:
+        if not _is_sqlite():
+            return True
         rows = db.session.execute(text(f"PRAGMA table_info({table})")).fetchall()
         return any(r[1] == col for r in rows)
 
     def _table_exists(table) -> bool:
+        if not _is_sqlite():
+            return True
         rows = db.session.execute(
             text("SELECT name FROM sqlite_master WHERE type='table' AND name=:t"),
             {"t": table}
@@ -1027,7 +1065,7 @@ def seed_if_empty():
                 line1="2 месяца",
                 line2="16 уроков теории",
                 line3="5 уроков практики",
-                price_text="100 000 тенге",
+                price_text="120 000 тенге",
                 sort_order=1, is_active=True
             ),
             HomePriceCard(
@@ -1045,7 +1083,7 @@ def seed_if_empty():
                 line1="2 месяца",
                 line2="16 уроков теории",
                 line3="5 уроков практики",
-                price_text="100 000 тенге",
+                price_text="120 000 тенге",
                 sort_order=1, is_active=True
             ),
             HomePriceCard(
@@ -1054,7 +1092,7 @@ def seed_if_empty():
                 line1="2 месяца",
                 line2="16 уроков теории",
                 line3="5 уроков практики",
-                price_text="95 000 тенге",
+                price_text="120 000 тенге",
                 sort_order=2, is_active=True
             ),
         ]
