@@ -37,7 +37,7 @@
       {% for it in items %}
       <div class="g-admin-item">
         <div class="g-admin-thumb">
-          <img src="{{ it.photo_url }}" alt="">
+          <img src="{{ media_url(it.photo_url) }}">
         </div>
 
         <form method="post" action="/admin/gallery/{{ it.id }}/update" enctype="multipart/form-data" class="g-admin-form">
