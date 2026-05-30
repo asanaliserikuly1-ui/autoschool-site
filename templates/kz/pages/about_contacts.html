@@ -1,0 +1,340 @@
+{% extends "kz/base.html" %}
+{% block title %}Біз туралы — Автошкола Шұғыла{% endblock %}
+
+{% block content %}
+
+<section class="about-fg">
+  <div class="container about-fg-inner">
+
+    <!-- TITLE -->
+    <div class="about-fg-head">
+      <h1 class="about-fg-title">БІЗ ТУРАЛЫ</h1>
+      <p class="about-fg-sub">
+        Біздің автошкола <b>2024 жылдың қыркүйегінде</b> <b>Шұғыла</b> ауданында жұмысын бастады.
+        Алғашқы күннен бастап мақсатымыз — <b>жай ғана «өткізу» емес</b>,
+        <b>сапалы әрі жауапкершілікпен</b> оқыту.
+        <br><br>
+        Курсанттардың сенімінің арқасында қысқа уақыт ішінде қала бойынша <b>5 филиалға</b> дейін өстік.
+        Біз <b>нақты дайындық</b> қағидасын ұстанамыз: куәлікті алудың алдында әр курсант
+        <b>білім мен дағдылар бойынша қорытынды тексеруден</b> өтеді.
+        <br><br>
+        Қажет болған жағдайда теориялық сабақтарды <b>қайтадан тегін</b> өтуге болады — біз үшін
+        материалдың түсінікті әрі толық меңгерілуі маңызды. Біздің мақсат — тек куәлік иелерін емес,
+        <b>сенімді және қауіпсіз жүргізушілерді</b> дайындау.
+      </p>
+    </div>
+
+    <!-- BLOCK 1 -->
+    <div class="about-fg-row">
+      <div class="about-fg-media">
+        <img src="{{ url_for('static', filename='images/about/about-sign.png') }}"
+             alt="Автошкола Шұғыла" class="about-fg-img">
+      </div>
+
+      <div class="about-fg-card">
+        <ul class="about-fg-list">
+          <li><span class="about-fg-ico"><i data-lucide="calendar-check" class="i"></i></span>
+            Жазылу бойынша практика — өз кестеңізге сай (таң/күн/кеш)
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="badge-check" class="i"></i></span>
+            Қарапайым тілмен түсіндіреміз: “жаттап алып, ұмытып кету” емес
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="car" class="i"></i></span>
+            Заманауи көліктер және дағдыларды қауіпсіз меңгеру
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="book-open" class="i"></i></span>
+            Тақырыптарды толық талдаумен офлайн теориялық сабақтар
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="map-pin" class="i"></i></span>
+            Алматы бойынша 5 филиал — өзіңізге жақынын таңдаңыз
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BLOCK 2 -->
+    <div class="about-fg-row about-fg-row--reverse">
+      <div class="about-fg-card">
+        <ul class="about-fg-list">
+          <li><span class="about-fg-ico"><i data-lucide="clock-3" class="i"></i></span>
+            Икемді оқу форматы: қадам-қадаммен, өз қарқыныңызбен
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="users" class="i"></i></span>
+            Қолдап, сабырмен түсіндіре алатын нұсқаушылар
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="clipboard-check" class="i"></i></span>
+            АвтоЦОН форматындағы ПДД тесттері — нақты емтиханға дайындаймыз
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="handshake" class="i"></i></span>
+            Сүйемелдеу: құжаттар мен кезеңдер бойынша құқық алғанға дейін бағыт береміз
+          </li>
+        </ul>
+      </div>
+
+      <div class="about-fg-media">
+        <img src="{{ url_for('static', filename='images/about/about-light.jpg') }}"
+             alt="Оқу процесі" class="about-fg-img about-fg-img--right">
+      </div>
+    </div>
+
+    <!-- BLOCK 3 -->
+    <div class="about-fg-row">
+      <div class="about-fg-media">
+        <img src="{{ url_for('static', filename='images/about/about-car.png') }}"
+             alt="Практика және емтихандар" class="about-fg-img">
+      </div>
+
+      <div class="about-fg-card">
+        <ul class="about-fg-list">
+          <li><span class="about-fg-ico"><i data-lucide="wallet" class="i"></i></span>
+            Қолма-қол және бөліп төлеу арқылы төлем (шарттарын филиалдан нақтылаңыз)
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="gift" class="i"></i></span>
+            Бонустар мен акциялар — топтардың кестесіне қарай (Instagram-да бақылаңыз)
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="languages" class="i"></i></span>
+            Оқу орыс және қазақ тілдерінде
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="graduation-cap" class="i"></i></span>
+            Құрылымды теория: ережелер + жағдайлар + қателерді талдау
+          </li>
+          <li><span class="about-fg-ico"><i data-lucide="file-text" class="i"></i></span>
+            Оқу кезеңіне тесттер мен материалдарға қолжетімділік
+          </li>
+        </ul>
+
+        <div class="about-fg-actions">
+          <button class="btn btn-primary" type="button" data-open-branches>
+            <i data-lucide="message-circle" class="i"></i>
+            <span>Филиалды таңдау</span>
+          </button>
+
+          <a class="btn btn-outline" href="/kz/training">
+            <i data-lucide="graduation-cap" class="i"></i>
+            <span>Оқу</span>
+          </a>
+
+          <a class="btn btn-outline" href="https://www.instagram.com/avtoshkola_shugyla/" target="_blank" rel="noopener">
+            <i data-lucide="instagram" class="i"></i>
+            <span>Instagram</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOUNDER -->
+    <div class="about-fg-row about-founder">
+      <div class="about-fg-card founder-text">
+        <div class="about-founder-title">АВТОШКОЛАНЫҢ НЕГІЗІН ҚАЛАУШЫ</div>
+        <div class="about-founder-name">Қайрат Сейтмұратұлы</div>
+
+        <div class="about-founder-text">
+          «Шұғыла» автошколасының негізін қалаушы. Алғашқы күннен бастап басты қағиданы қалыптастырды —
+          <b>сапалы әрі жауапкершілікпен</b> оқыту, <b>нақты дайындыққа</b> басымдық беру.
+          Осы тәсілдің арқасында автошкола Алматыда қысқа уақытта <b>5 филиалға</b> дейін өсті,
+          ал түлектер тек жүргізуші куәлігін ғана емес, <b>қауіпсіз жүргізу</b> дағдылары мен
+          <b>сенімділікті</b> алып шығады.
+        </div>
+
+        <a class="btn btn-outline" href="https://www.instagram.com/kairat_seitmuratovich/" target="_blank" rel="noopener">
+          <i data-lucide="instagram" class="i"></i>
+          <span>Негізін қалаушының Instagram-ы</span>
+        </a>
+      </div>
+
+      <div class="about-fg-media founder-media">
+        <img class="founder-img"
+             src="{{ url_for('static', filename='images/about/kairat.jpg') }}"
+             alt="Автошкола Шұғыла негізін қалаушы">
+      </div>
+    </div>
+
+    <!-- ===== GALLERY (slider) — ВНУТРИ container ===== -->
+    <div class="about-fg-row about-gallery">
+      <div class="about-fg-card about-gallery-card">
+        <div class="about-founder-title">ГАЛЕРЕЯ</div>
+
+        {% if gallery and gallery|length %}
+          <div class="g-wrap" id="gWrap">
+            <button class="g-nav g-prev" type="button" aria-label="Алдыңғы">‹</button>
+
+            <div class="g-viewport">
+              <div class="g-track" id="gTrack">
+                {% for img in gallery %}
+                  <button class="g-card" type="button"
+                          data-full="{{ media_url(img.photo_url) }}"
+                          data-title="{{ (img.title or '')|e }}">
+                    <img src="{{ media_url(img.photo_url) }}"
+                         alt="{{ img.title or 'Галерея' }}">
+                    {% if img.title %}
+                      <span class="g-cap">{{ img.title }}</span>
+                    {% endif %}
+                  </button>
+                {% endfor %}
+              </div>
+            </div>
+
+            <button class="g-nav g-next" type="button" aria-label="Келесі">›</button>
+          </div>
+
+          <!-- lightbox -->
+          <div class="ag-modal" id="agModal" aria-hidden="true">
+            <div class="ag-backdrop" data-close></div>
+
+            <div class="ag-box" role="dialog" aria-modal="true">
+              <button class="ag-close" type="button" data-close aria-label="Жабу">×</button>
+
+              <button class="ag-arrow ag-left" type="button" aria-label="Артқа">‹</button>
+              <button class="ag-arrow ag-right" type="button" aria-label="Алға">›</button>
+
+              <img id="agFull" src="" alt="">
+              <div class="ag-cap" id="agCap"></div>
+            </div>
+          </div>
+        {% else %}
+          <p class="muted" style="margin-top:10px;">Әзірге фото жоқ. Оларды админ-панель арқылы қосыңыз.</p>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function(){
+  const wrap = document.getElementById("gWrap");
+  if (!wrap) return;
+
+  const track = document.getElementById("gTrack");
+  const viewport = wrap.querySelector(".g-viewport");
+  const btnPrev = wrap.querySelector(".g-prev");
+  const btnNext = wrap.querySelector(".g-next");
+  const cards = [...wrap.querySelectorAll(".g-card")];
+
+  track.style.animation = "none";
+
+  function clamp(val, min, max){ return Math.max(min, Math.min(max, val)); }
+
+  function maxScroll(){
+    const total = track.scrollWidth;
+    const view = viewport.clientWidth;
+    return Math.max(0, total - view);
+  }
+
+  function pageStep(){
+    return Math.max(240, Math.floor(viewport.clientWidth * 0.92));
+  }
+
+  let x = 0;
+
+  function render(){
+    const m = maxScroll();
+    x = clamp(x, 0, m);
+    track.style.transform = `translateX(${-x}px)`;
+    btnPrev.disabled = (x <= 0);
+    btnNext.disabled = (x >= m - 1);
+  }
+
+  btnPrev.addEventListener("click", ()=>{ x -= pageStep(); render(); });
+  btnNext.addEventListener("click", ()=>{ x += pageStep(); render(); });
+
+  viewport.addEventListener("wheel", (e)=>{
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)){
+      e.preventDefault();
+      x += e.deltaY;
+      render();
+    }
+  }, {passive:false});
+
+  let startX = null;
+  viewport.addEventListener("touchstart", (e)=>{ startX = e.touches[0].clientX; }, {passive:true});
+  viewport.addEventListener("touchend", (e)=>{
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    startX = null;
+    if (Math.abs(dx) > 35){
+      x += (dx > 0 ? -pageStep() : pageStep());
+      render();
+    }
+  }, {passive:true});
+
+  const imgs = [...track.querySelectorAll("img")];
+  let leftToLoad = imgs.length;
+
+  function onImgDone(){
+    leftToLoad--;
+    if (leftToLoad <= 0){
+      render();
+    }
+  }
+
+  if (imgs.length){
+    imgs.forEach(img=>{
+      if (img.complete) onImgDone();
+      else {
+        img.addEventListener("load", onImgDone, {once:true});
+        img.addEventListener("error", onImgDone, {once:true});
+      }
+    });
+  } else {
+    render();
+  }
+
+  window.addEventListener("resize", render);
+
+  // ===== Lightbox =====
+  const modal = document.getElementById("agModal");
+  const full = document.getElementById("agFull");
+  const cap = document.getElementById("agCap");
+  if (!modal || !full) return;
+
+  if (modal.parentElement !== document.body) {
+    document.body.appendChild(modal);
+  }
+
+  let idx = 0;
+
+  function openAt(i){
+    idx = (i + cards.length) % cards.length;
+
+    const fullSrc = cards[idx].getAttribute("data-full") || "";
+    const title = cards[idx].getAttribute("data-title") || "";
+    const imgEl = cards[idx].querySelector("img");
+
+    full.src = fullSrc;
+    full.alt = title || (imgEl ? imgEl.alt : "Фото");
+    if (cap) cap.textContent = title;
+
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function close(){
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    full.src = "";
+    if (cap) cap.textContent = "";
+    document.body.style.overflow = "";
+  }
+
+  cards.forEach((btn, i)=> btn.addEventListener("click", ()=> openAt(i)));
+  modal.querySelectorAll("[data-close]").forEach(el=> el.addEventListener("click", close));
+
+  const left = modal.querySelector(".ag-left");
+  const right = modal.querySelector(".ag-right");
+  if (left) left.addEventListener("click", ()=> openAt(idx - 1));
+  if (right) right.addEventListener("click", ()=> openAt(idx + 1));
+
+  document.addEventListener("keydown", (e)=>{
+    if (!modal.classList.contains("is-open")) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") openAt(idx - 1);
+    if (e.key === "ArrowRight") openAt(idx + 1);
+  });
+
+  if (window.lucide) lucide.createIcons();
+})();
+</script>
+
+{% endblock %}
