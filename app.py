@@ -94,6 +94,7 @@ class Teacher(db.Model):
     rating = db.Column(db.Float, nullable=False, default=4.9)
     rating_count = db.Column(db.Integer, nullable=False, default=0)
 
+
 class GalleryImage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
@@ -104,6 +105,8 @@ class GalleryImage(db.Model):
     is_active = db.Column(db.Boolean, default=True)
 
     sort_order = db.Column(db.Integer, nullable=False, default=0)
+
+
 # ---------- Auth (BasicAuth) ----------
 def check_auth(username, password, app):
     return username == app.config.get("ADMIN_USER") and password == app.config.get("ADMIN_PASS")
@@ -178,8 +181,6 @@ def create_app():
     def robots():
         return send_from_directory(app.static_folder, "robots.txt")
 
-
-
     def allowed_file(filename: str) -> bool:
         return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXT
 
@@ -220,7 +221,6 @@ def create_app():
         abs_path = os.path.join(folder, fname)
         file_storage.save(abs_path)
         return f"uploads/{local_subfolder}/{fname}"
-
 
     # ---------- Photos ----------
     def save_instructor_photo(file_storage) -> str:
@@ -435,7 +435,12 @@ def create_app():
     def admin_instructors():
         instructors = Instructor.query.order_by(Instructor.id.desc()).all()
         branches = Branch.query.order_by(Branch.name.asc()).all()
-        return render_template("admin/instructors.html", instructors=instructors, branches=branches)
+        return render_template(
+            "admin/instructors.html",
+            instructors=instructors,
+            branches=branches,
+            media_url=media_url,
+        )
 
     @app.post("/admin/instructors/create")
     @requires_auth
@@ -544,7 +549,11 @@ def create_app():
     @requires_auth
     def admin_gallery():
         items = GalleryImage.query.order_by(GalleryImage.sort_order.asc(), GalleryImage.id.desc()).all()
-        return render_template("admin/gallery.html", items=items)
+        return render_template(
+            "admin/gallery.html",
+            items=items,
+            media_url=media_url,
+        )
 
     @app.post("/admin/gallery/upload")
     @requires_auth
@@ -762,7 +771,8 @@ def create_app():
             teachers=teachers_list,
             branches=branches,
             branch=branch,
-            branch_map=branch_map
+            branch_map=branch_map,
+            media_url=media_url,
         )
 
     @app.get("/about")
@@ -771,7 +781,7 @@ def create_app():
                    .filter_by(is_active=True)
                    .order_by(GalleryImage.sort_order.asc(), GalleryImage.id.desc())
                    .all())
-        return render_template("pages/about_contacts.html", gallery=gallery)
+        return render_template("pages/about_contacts.html", gallery=gallery, media_url=media_url)
 
     @app.get("/admin")
     @requires_auth
@@ -849,7 +859,8 @@ def create_app():
             teachers=teachers_list,
             branches=branches,
             branch=branch,
-            branch_map=branch_map
+            branch_map=branch_map,
+            media_url=media_url,
         )
 
     @app.get("/kz/about")
@@ -858,7 +869,7 @@ def create_app():
                    .filter_by(is_active=True)
                    .order_by(GalleryImage.sort_order.asc(), GalleryImage.id.desc())
                    .all())
-        return render_template("kz/pages/about_contacts.html", gallery=gallery)
+        return render_template("kz/pages/about_contacts.html", gallery=gallery, media_url=media_url)
 
     @app.get("/kz/privacy-policy")
     def privacy_policy_kz():
@@ -1100,7 +1111,6 @@ def seed_if_empty():
         db.session.commit()
 
 app = create_app()
-
 
 
 if __name__ == "__main__":
