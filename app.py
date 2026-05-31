@@ -139,14 +139,17 @@ def create_app():
     # На Render нельзя хранить рабочую SQLite-базу в файлах проекта: после redeploy/restart
     # файл может исчезнуть. Поэтому в проде берём PostgreSQL/Supabase из DATABASE_URL.
     database_url = os.getenv("DATABASE_URL") or os.getenv("SUPABASE_DATABASE_URL")
+    database_url = os.getenv("DATABASE_URL") or os.getenv("SUPABASE_DATABASE_URL")
+
     if database_url:
-        # Supabase/Render иногда дают URL в старом формате postgres://,
-        # SQLAlchemy 2.x ожидает postgresql://.
         if database_url.startswith("postgres://"):
-            database_url = database_url.replace("postgres://", "postgresql://", 1)
+            database_url = database_url.replace("postgres://", "postgresql+psycopg://", 1)
+    
+        elif database_url.startswith("postgresql://"):
+            database_url = database_url.replace("postgresql://", "postgresql+psycopg://", 1)
+    
         app.config["SQLALCHEMY_DATABASE_URI"] = database_url
     else:
-        # Локально можно оставить SQLite, чтобы сайт запускался без Supabase.
         os.makedirs(app.instance_path, exist_ok=True)
         db_path = os.path.join(app.instance_path, "app.db")
         app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + db_path
